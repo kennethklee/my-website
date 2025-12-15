@@ -1,0 +1,8 @@
+{$DOMAIN} {
+  root * /srv
+  file_server
+}
+
+edit.{$DOMAIN} {
+  reverse_proxy filebrowser:8080
+}

@@ -1,0 +1,29 @@
+configs:
+  caddyfile_00:
+    file: ./Caddyfile
+
+volumes:
+  data:
+  config:
+
+services:
+  web:
+    image: caddy:alpine
+    environment:
+      - DOMAIN=${DOMAIN:-localhost:80}
+    ports:
+      - "80:80"
+      - "443:443"
+    configs:
+      - source: caddyfile_00
+        target: /etc/caddy/Caddyfile
+    volumes:
+      - /srv:/srv
+      - data:/data
+
+  filebrowser:
+    image: filebrowser/filebrowser:v2.52.0
+    volumes:
+      - /srv:/srv
+      - data:/database
+      - config:/config
